@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'MAVEN_HOME'  // The name you gave in Jenkins Tools
+        // jdk 'JDK17'         // If you added JDK in Tools section
+    }
+
     environment {
         IMAGE_NAME = "springboot-app"
         IMAGE_TAG = "v1"
@@ -67,5 +72,6 @@ pipeline {
         }
     }
 }
+
 
 
