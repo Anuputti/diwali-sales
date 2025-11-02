@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning repository...'
-                git branch: 'main', url: 'https://github.com/<your-username>/<your-repo>.git'
+                git branch: 'main', url: 'https://github.com/Anuputti/<your-repo>.git'
             }
         }
 
@@ -67,3 +67,4 @@ pipeline {
         }
     }
 }
+
