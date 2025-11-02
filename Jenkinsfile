@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven 'MAVEN_HOME'  // The name you gave in Jenkins Tools
-        // jdk 'JDK17'         // If you added JDK in Tools section
+        jdk 'JDK17'         // If you added JDK in Tools section
     }
 
     environment {
@@ -62,6 +62,7 @@ pipeline {
         }
     }
 }
+
 
 
 
