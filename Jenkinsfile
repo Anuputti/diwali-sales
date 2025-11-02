@@ -36,22 +36,12 @@ pipeline {
             }
         }
 
-        stage('Tag & Push Image') {
+        stage('Docker Build & Push') {
             steps {
-                echo 'Tagging and pushing image...'
-                // For local registry:
                 sh '''
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker build -t localhost:5000/diwali-sales:latest .
+                docker push localhost:5000/diwali-sales:latest
                 '''
-                // For Docker Hub:
-                // withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                //     sh '''
-                //         echo "$PASS" | docker login -u "$USER" --password-stdin
-                //         docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                //         docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                //     '''
-                // }
             }
         }
 
@@ -72,6 +62,7 @@ pipeline {
         }
     }
 }
+
 
 
 
