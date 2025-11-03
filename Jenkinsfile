@@ -1,38 +1,22 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'MAVEN_HOME'  // The name you gave in Jenkins Tools
-        jdk 'JDK17'         // If you added JDK in Tools section
-    }
-
     environment {
         IMAGE_NAME = "springboot-app"
         IMAGE_TAG = "v1"
-        REGISTRY = "localhost:5000"   // Change to your Docker Hub if needed
-        // For DockerHub: REGISTRY = "docker.io/yourusername"
-        // Then full image would be "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+        REGISTRY = "localhost:5000"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                echo 'Cloning repository...'
                 git branch: 'main', url: 'https://github.com/Anuputti/diwali-sales.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the project...'
                 sh 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
             }
         }
 
@@ -44,26 +28,10 @@ pipeline {
                 '''
             }
         }
-
-        stage('Clean Up') {
-            steps {
-                echo 'Cleaning up...'
-                sh 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true'
-            }
-        }
     }
 
     post {
-        success {
-            echo "🎉 Build and Push successful!"
-        }
-        failure {
-            echo "❌ Build failed!"
-        }
+        success { echo "🎉 Build and Push successful!" }
+        failure { echo "❌ Build failed!" }
     }
 }
-
-
-
-
-
